@@ -1,61 +1,78 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Header from './components/common/Header';
-import Navbar from './components/common/Navbar';
-import Infobox from  './components/common/Infobox';
 import {Link} from 'react-router';
 import observer from './models/observer';
+import {logout} from './models/user';
+
+
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { loggedIn: false, username: '' };
-        observer.onSessionUpdate = this.onSessionUpdate.bind(this);
+        this.state = {
+            loggedIn: false,
+            username: ''
+        };
+
+        this.onSessionUpdate = this.onSessionUpdate.bind(this);
+        this.onLogout = this.onLogout.bind(this);
+
     }
 
     componentDidMount() {
-        this.onSessionUpdate();
+        observer.onSessionUpdate = this.onSessionUpdate;
+        this.checkUserCredentials();
     }
 
     onSessionUpdate() {
-        let name = sessionStorage.getItem("username");
-        if (name) {
-            this.setState({ loggedIn: true, username: sessionStorage.getItem("username") });
+        console.log('rechecking session creds');
+        this.checkUserCredentials();
+    }
+
+    checkUserCredentials() {
+        let username = sessionStorage.getItem('username');
+        if(!username) {
+            this.setState({
+                loggedIn: false
+            })
         } else {
-            this.setState({ loggedIn: false, username: '' });
+            this.setState({
+                loggedIn: true,
+                username: username
+            })
         }
     }
 
+    onLogout() {
+        this.checkUserCredentials();
+    }
+
     render() {
-        let navbar = {};
-        if (!this.state.loggedIn) {
-            navbar = (
-                    <Navbar>
-                        <Link to="/" className="btn btn-default" activeClassName="btn btn-default active" onlyActiveOnIndex={true}>Home</Link>
-                        <Link to="/about" className="btn btn-default" activeClassName="btn btn-default active">About</Link>
-                        <Link to="/login" className="btn btn-default" activeClassName="btn btn-default active">Login</Link>
-                        <Link to="/register" className="btn btn-default" activeClassName="btn btn-default active">Register</Link>
-                    </Navbar>
-                );
-        } else {
-            navbar = (
-                <Navbar>
-                    <Link to="/" className="btn btn-default" activeClassName="btn btn-default active" onlyActiveOnIndex={true}>Home</Link>
-                    <Link to="/catalog" className="btn btn-default" activeClassName="btn btn-default active">Catalog</Link>
-                    <Link to="/about" className="btn btn-default" activeClassName="btn btn-default active">About</Link>
-                    <Link to="/logout" className="btn btn-default" activeClassName="btn btn-default active">Logout</Link>
-                </Navbar>
+        if(this.state.loggedIn) {
+            return (
+                <div className="container">
+                    <Header loggedIn={this.state.loggedIn} username={this.state.username}>
+                        <Link to="/" className="btn btn-default">Home</Link>
+                        <Link to="/catalog" className="btn btn-default">Catalog</Link>
+                        <Link to="/about" className="btn btn-default">About</Link>
+                        <Link to="" className="btn btn-default" onClick={ () => logout(this.onLogout) }>Logout</Link>
+                    </Header>
+                    {this.props.children}
+                </div>
             );
         }
 
         return (
-            <div className="container">
-                <Header loggedIn={this.state.loggedIn} user={this.state.username}>
-                    {navbar}
-                </Header>
-                {this.props.children}
-                <Infobox/>
-            </div>
-        )
+          <div className="container">
+              <Header loggedIn={this.state.loggedIn} username={this.state.username}>
+                  <Link to="/" className="btn btn-default">Home</Link>
+                  <Link to="/about" className="btn btn-default">About</Link>
+                  <Link to="/login" className="btn btn-default">Login</Link>
+                  <Link to="/register" className="btn btn-default">Register</Link>
+              </Header>
+              {this.props.children}
+          </div>
+        );
     }
 }
 

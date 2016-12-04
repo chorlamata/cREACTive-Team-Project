@@ -1,62 +1,59 @@
 import React, {Component} from 'react';
 import LoginForm from './LoginForm';
 import {login} from '../../models/user';
+import observer from '../../models/observer';
 
 export default class LoginPage extends Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
-        this.state = { username: '', password: '', submitDisabled: false };
-        this.bindEventHandlers();
-    }
-
-    bindEventHandlers() {
-        // Make sure event handlers have the correct context
+        this.state = {
+            username: '',
+            password: '',
+            inputDisabled: false
+        }
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
-        this.onSubmitResponse = this.onSubmitResponse.bind(this);
+        this.onLoginSuccess = this.onLoginSuccess.bind(this);
     }
 
     onChangeHandler(event) {
-        switch (event.target.name) {
-            case 'username':
-                this.setState({ username: event.target.value });
-                break;
-            case 'password':
-                this.setState({ password: event.target.value });
-                break;
-            default:
-                break;
-        }
+        event.preventDefault();
+        let newState = {};
+        newState[event.target.name] = event.target.value;
+        this.setState(newState);
     }
 
     onSubmitHandler(event) {
         event.preventDefault();
-        this.setState({ submitDisabled: true });
-        login(this.state.username, this.state.password, this.onSubmitResponse);
+        this.setState({
+            inputDisabled: true
+        });
+        login(this.state.username, this.state.password, this.onLoginSuccess)
     }
 
-    onSubmitResponse(response) {
-        if (response === true) {
-            // Navigate away from login page
-            this.context.router.push('/');
-        } else {
-            // Something went wrong, let the user try again
-            this.setState({ submitDisabled: true });
+    onLoginSuccess(result) {
+        this.setState({
+            inputDisabled: false
+        });
+        if(result) {
+            observer.onSessionUpdate();
+            this.context.router.push("/");
         }
     }
 
     render() {
         return (
             <div>
-                <span>Login Page</span>
+                <h1>Login Page</h1>
                 <LoginForm
                     username={this.state.username}
                     password={this.state.password}
-                    submitDisabled={this.state.submitDisabled}
-                    onChangeHandler={this.onChangeHandler}
-                    onSubmitHandler={this.onSubmitHandler}
+                    onChange={this.onChangeHandler}
+                    onSubmit={this.onSubmitHandler}
+                    inputDisabled={this.state.inputDisabled}
                 />
             </div>
+
         );
     }
 }

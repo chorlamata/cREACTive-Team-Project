@@ -1,3 +1,1 @@
-export default {
-    onSessionUpdate: () => undefined
-}
+export default {};
