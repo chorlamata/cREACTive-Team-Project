@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import CommentForm from './CommentForm';
-//import observer from '../../models/observer'
-import {create} from '../../models/product'
+import {Link} from 'react-router'
+import {leaveComment} from '../../models/comment'
 
-export default class CreatePage extends Component{
+export default class CommentsPage extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -23,16 +23,24 @@ export default class CreatePage extends Component{
     }
     onSubmitHandler(event){
         event.preventDefault();
-        create(this.state.name, this.state.link, this.state.description, this.onCreateSuccess)
+        leaveComment(this.state.content, this.state.postId, this.onCreateSuccess)
     }
     onCreateSuccess(result){
-        this.context.router.push("/catalog")
+        this.context.router.push(`/catalog`)
 
     }
     render(){
         return(
             <div>
-                <h1>Comment product</h1>
+                <h1>Product details</h1>
+                <div className="card">
+                    <h2 className="card-title">{this.props.name}</h2>
+
+                    <img className="card-img-top" src={this.props.link} alt="Card image cap"/>
+                    <div className="card-block">
+                        <p className="card-text">{this.props.description || "No description"}</p>
+                    </div>
+                </div>
                 <CommentForm
                     content={this.state.content}
                     onChange={this.onChangeHandler}
@@ -43,6 +51,6 @@ export default class CreatePage extends Component{
         )
     }
 }
-CommentPage.contextTypes = {
+CommentsPage.contextTypes = {
     router:React.PropTypes.object
 };

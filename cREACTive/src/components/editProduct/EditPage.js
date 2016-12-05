@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import EditForm from '../editProduct/EditForm';
-import {loadProductDetails, editProduct, deleteProduct} from '../../models/product'
+import React, {Component} from 'react';
+import EditForm from './EditForm';
+import {loadProductDetails, editProduct} from '../../models/product'
 
 export default class EditPage extends Component {
     constructor(props) {
@@ -11,6 +11,7 @@ export default class EditPage extends Component {
             description: "",
             inputDisabled: true
         };
+
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onEditSuccess = this.onEditSuccess.bind(this);
@@ -37,16 +38,12 @@ export default class EditPage extends Component {
 
     onSubmitHandler(event) {
         event.preventDefault();
-        editProduct(this.props.params.productId, this.state.name, this.state.link, this.state.description, this.onEditSuccess)
+            editProduct(this.props.params.productId, this.state.name, this.state.link, this.state.description, this.onEditSuccess)
     }
 
     onEditSuccess(result) {
         this.context.router.push("/catalog")
     }
-    onDeleteSuccess(result) {
-        this.context.router.push("/catalog")
-    }
-
     render() {
         return (
             <div>

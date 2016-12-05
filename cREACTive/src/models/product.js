@@ -24,7 +24,7 @@ function editProduct(productId, name, link, description, callback) {
         link:link,
         description:description
     };
-    requester.update('appdata', 'products/:'+productId, 'kinvey', productData)
+    requester.update('appdata', 'products/'+productId, 'kinvey', productData)
         .then(()=> callback(true))
         .catch(()=> callback(false))
 }

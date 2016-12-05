@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Product from './Product'
-import {loadProducts} from '../../models/product'
+import {loadProducts, deleteProduct} from '../../models/product'
 
 export default class Catalog extends Component{
     constructor(props){
@@ -18,8 +18,7 @@ export default class Catalog extends Component{
     }
     render(){
         return(
-
-            <div>
+            <div className="container">
                 <h1>Catalog</h1>
                 {this.state.products.map((t,i) => {
                     return <Product key={i} name={t.name} link={t.link} description={t.description} productId={t._id}/>

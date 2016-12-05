@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router'
+import{deleteProduct, loadProducts} from '../../models/product'
 
 export default class Product extends Component{
     render(){
         return(
-
-            <div>
-                <span className="spanner">Name</span>
-                <span>{this.props.name}</span>
-                <span>{this.props.link}</span>
-                <span className="spanner">Description</span>
-                <p>{this.props.description || "No description"}</p>
-                <span className="spanner">Management</span>
-                <Link to={'/edit/' + this.props.productId} className="btn btn-default">Edit</Link>
+        <div className="card">
+            <img className="card-img-top" src={this.props.link} alt="Card image cap"/>
+            <div className="card-block">
+                <h4 className="card-title">{this.props.name}</h4>
+                <p className="card-text">{this.props.description || "No description"}</p>
+                <Link to={"/edit/"+this.props.productId} className="btn btn-primary">Edit</Link>
+                <input type="submit" value='Delete' className="btn btn-primary" onClick={()=>deleteProduct(this.props.productId)}/>
+                <Link to={'/products/' + this.props.productId} className="btn btn-primary">View details</Link>
             </div>
+        </div>
         )
     }
 }
