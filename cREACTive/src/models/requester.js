@@ -45,6 +45,20 @@ function post(module, url, auth, data) {
     return $.ajax(request);
 }
 
+function update(module, url, auth, data) {
+    let hostUrl = baseUrl + module + "/" + appKey + "/" + url;
+    let header = makeAuth(auth);
+
+    let request = {
+        method: "PUT",
+        url: hostUrl,
+        headers: header,
+        data: data
+    };
+
+    return $.ajax(request);
+}
 
 
-export {get, post};
+
+export {get, post, update};
