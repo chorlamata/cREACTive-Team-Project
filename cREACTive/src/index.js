@@ -7,6 +7,8 @@ import Catalog from './components/catalog/CatalogPage';
 import About from './components/about/AboutPage';
 import Register from './components/register/RegisterPage';
 import Login from './components/login/LoginPage';
+import Create from './components/create/CreatePage';
+import Edit from './components/editProduct/EditPage';
 import Home from './components/home/HomePage';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
@@ -18,6 +20,8 @@ ReactDOM.render(
             <Route path="register" component={Register}/>
             <Route path="login" component={Login}/>
             <Route path="catalog" component={Catalog}/>
+            <Route path="create" component={Create}/>
+            <Route path="edit/:productId" component={Edit}/>
         </Route>
     </Router>,
   document.getElementById('root')

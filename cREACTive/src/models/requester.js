@@ -41,4 +41,27 @@ function post(module, url, auth, data) {
     }
     return $.ajax(request);
 }
-export {get, post}
+function update(module, url, auth, data) {
+    let hostUrl = baseUrl + module  + "/" + appId + "/"+ url;
+    let header = getAuthorizationHeaders(auth);
+    let request = {
+        method: "PUT",
+        url: hostUrl,
+        headers: header,
+        data: data
+    };
+
+    return $.ajax(request);
+}
+function remove(module, url, auth){
+    let hostUrl = baseUrl + module  + "/" + appId + "/"+ url;
+    let header = getAuthorizationHeaders(auth);
+    let request = {
+        method: "DELETE",
+        url: hostUrl,
+        headers: header,
+    };
+
+    return $.ajax(request);
+}
+export {get, post, update, remove}
