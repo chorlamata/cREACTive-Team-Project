@@ -75,18 +75,22 @@ export default class ProductPage extends Component {
     }
 
     onCreateSuccess(result) {
-        this.context.router.push("/product/" + this.state.productId);
+        loadComments(this.props.params.productId, this.onLoadCommentsSuccess);
+        this.state.comment = '';
     }
 
     render() {
         return (
-            <div>
+            <div className="row">
+                <div className="col-md-4">
                 <h1>Product Page</h1>
                 <Product
                     name={this.state.name}
                     description={this.state.description}
                     image={this.state.image}
                 />
+                </div>
+                <div className="col-md-8">
                 <h2>Comments</h2>
                 {this.state.comments.map((c, i)=>{
                     return <Comments
@@ -104,6 +108,7 @@ export default class ProductPage extends Component {
                     onSubmit={this.onSubmitHandler}
                     inputDisabled={this.state.inputDisabled}
                 />
+                </div>
             </div>
         );
     }
