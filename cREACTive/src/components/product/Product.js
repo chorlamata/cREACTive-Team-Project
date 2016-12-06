@@ -6,11 +6,8 @@ export default class Product extends Component {
     render() {
         return (
             <div>
-                <span className="spanner">Name</span>
-                <span>{this.props.name}</span>
-                <span className="spanner">Description</span>
+                <h1>{this.props.name}</h1>
                 <p>{this.props.description || "No description"}</p>
-                <span className="spanner">Image</span>
                 <img src={this.props.image} className="img-responsive img-rounded" />
             </div>
         )

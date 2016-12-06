@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import DeleteForm from './DeleteForm';
 import {loadDetails, deleteProduct} from '../../models/product';
+import toastr from 'toastr';
 //import observer from '../../models/observer';
 
 export default class DeletePage extends Component {
@@ -54,7 +55,12 @@ export default class DeletePage extends Component {
     }
 
     onDeleteSuccess(result) {
-        this.context.router.push("/catalog");
+        if(result){
+            toastr.success("Product deleted.");
+            this.context.router.push("/catalog");
+        }else{
+            toastr.error("Product wasn't deleted.")
+        }
     }
 
     render() {

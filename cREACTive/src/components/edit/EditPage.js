@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import EditForm from './EditForm';
 import {loadDetails, edit} from '../../models/product';
+import toastr from 'toastr';
 //import observer from '../../models/observer';
 
 export default class EditPage extends Component {
@@ -57,7 +58,12 @@ export default class EditPage extends Component {
     }
 
     onEditSuccess(result) {
-        this.context.router.push("/catalog");
+        if(result) {
+            toastr.success("Product edited.");
+            this.context.router.push("/catalog");
+        }else{
+            toastr.error("Product wasn't edited.")
+        }
     }
 
     render() {

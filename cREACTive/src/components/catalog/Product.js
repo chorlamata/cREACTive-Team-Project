@@ -4,18 +4,26 @@ import {Link} from 'react-router';
 
 export default class Product extends Component {
     render() {
+        let editProduct = null;
+        let deleteProduct = null;
+
+        if (this.props.creator === sessionStorage.getItem('userId')) {
+            editProduct = <Link to={"edit/" + this.props.productId} className="btn btn-default">Edit</Link>;
+            deleteProduct = <Link to={"delete/" + this.props.productId} className="btn btn-default">Delete</Link>
+        }
+
         return (
-            <div className="product-box">
+            <div className="col-md-4 product-box">
                 <span className="spanner">Name</span>
-                <span>{this.props.name}</span>
-                <span className="spanner">Description</span>
-                <p>{this.props.description || "No description"}</p>
+                <div className="name-heading"><h4>{this.props.name}</h4></div>
                 <span className="spanner">Image</span>
-                <img src={this.props.image} />
+                <img src={this.props.image} className="img-responsive img-rounded" />
                 <span className="spanner">Management</span>
-                <Link to={"edit/" + this.props.productId} className="btn btn-default">Edit</Link>
-                <Link to={"delete/" + this.props.productId} className="btn btn-default">Delete</Link>
-                <Link to={"product/" + this.props.productId} className="btn btn-default">View Details</Link>
+                <div className="management">
+                    {editProduct}
+                    {deleteProduct}
+                    <Link to={"product/" + this.props.productId} className="btn btn-default">View Details</Link>
+                </div>
             </div>
         )
     }

@@ -7,7 +7,8 @@ export default class CatalogPage extends Component {
         super(props);
 
         this.state = {
-            products: []
+            products: [],
+            canEdit: false
         };
         this.onLoadSuccess = this.onLoadSuccess.bind(this);
     }
@@ -17,12 +18,17 @@ export default class CatalogPage extends Component {
     }
 
     onLoadSuccess(response) {
+        let newState = {};
         this.setState({ products: response });
+        if (response._acl.creator === sessionStorage.getItem('userId')) {
+            newState.canEdit = true;
+        }
+        this.setState(newState);
     }
 
     render() {
         return (
-            <div>
+            <div className="row">
                 <h1>Catalog Page</h1>
                 {this.state.products.map((p, i)=>{
                     return <Product
@@ -31,6 +37,7 @@ export default class CatalogPage extends Component {
                                 description={p.description}
                                 image={p.image}
                                 productId={p._id}
+                                creator={p._acl.creator}
                             />
                 })}
             </div>

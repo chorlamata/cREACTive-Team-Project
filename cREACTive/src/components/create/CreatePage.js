@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import CreateForm from './CreateForm';
 import {create} from '../../models/product';
+import toastr from 'toastr';
+
 //import observer from '../../models/observer';
 
 export default class CreatePage extends Component {
@@ -47,7 +49,12 @@ export default class CreatePage extends Component {
     }
 
     onCreateSuccess(result) {
-        this.context.router.push("/catalog");
+        if(result){
+            toastr.success("Product created.");
+            this.context.router.push("/catalog");
+        }else {
+            toastr.error("Product wasn't created.")
+        }
     }
 
     render() {

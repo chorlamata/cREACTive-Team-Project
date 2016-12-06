@@ -3,6 +3,7 @@ import Product from './Product';
 import Comments from './Comments';
 import PostCommentForm from './PostCommentForm';
 import {loadDetails, loadComments, postComment} from '../../models/product';
+import toastr from 'toastr';
 
 export default class ProductPage extends Component {
     constructor(props) {
@@ -75,22 +76,26 @@ export default class ProductPage extends Component {
     }
 
     onCreateSuccess(result) {
-        loadComments(this.props.params.productId, this.onLoadCommentsSuccess);
-        this.state.comment = '';
+        if(result){
+            toastr.success("Comment posted.");
+            loadComments(this.props.params.productId, this.onLoadCommentsSuccess);
+            this.state.comment = '';
+        }else {
+            toastr.error("Comment wasn't created")
+        }
     }
 
     render() {
         return (
             <div className="row">
-                <div className="col-md-4">
-                <h1>Product Page</h1>
+                <div className="col-md-6">
                 <Product
                     name={this.state.name}
                     description={this.state.description}
                     image={this.state.image}
                 />
                 </div>
-                <div className="col-md-8">
+                <div className="col-md-6">
                 <h2>Comments</h2>
                 {this.state.comments.map((c, i)=>{
                     return <Comments

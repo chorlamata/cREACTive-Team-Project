@@ -1,15 +1,29 @@
 .product-box {
-    float: left;
-    width: 300px;
-    border: 3px solid antiquewhite;
-    margin: 1em;
+    margin-bottom: 50px;
 }
 
 .product-box img {
-    width: 294px;
+    height: 200px;
+    margin: 10px;
+}
+
+.product-box .name-heading {
+    margin: 10px;
+}
+
+.product-box .management {
+    margin: 10px;
 }
 
 .spanner {
     display: block;
-    background-color: antiquewhite;
+    background-color: lightslategray;
+    padding: 5px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.comment {
+    margin-bottom: 20px;
+    border: 1px solid lightslategray;
 }

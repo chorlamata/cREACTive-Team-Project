@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import RegisterForm from './RegisterForm';
 import {register} from '../../models/user';
 import observer from '../../models/observer';
+import toastr from 'toastr';
 
 export default class RegisterPage extends Component {
     constructor (props) {
@@ -43,8 +44,13 @@ export default class RegisterPage extends Component {
         this.setState({
             inputDisabled: false
         });
-        observer.onSessionUpdate();
-        this.context.router.push("/");
+        if(result) {
+            toastr.success("Register successful.");
+            observer.onSessionUpdate();
+            this.context.router.push("/");
+        }else{
+            toastr.error("Register failed.")
+        }
     }
 
     render() {

@@ -12,6 +12,7 @@ import Edit from './components/edit/EditPage';
 import Delete from './components/delete/DeletePage';
 import Product from './components/product/ProductPage';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/toastr/build/toastr.min.css'
 
 
 ReactDOM.render(
