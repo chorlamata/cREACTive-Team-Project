@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-import './Team.css'
+import '../catalog/Product.css'
 import {Link} from 'react-router';
 
-export default class Team extends Component {
+export default class Product extends Component {
     render() {
         return (
-            <div className="team-box">
+            <div className="product-box">
                 <span className="spanner">Name</span>
                 <span>{this.props.name}</span>
                 <span className="spanner">Description</span>
                 <p>{this.props.description || "No description"}</p>
-                <span className="spanner">Management</span>
-                <Link to={"edit/" + this.props.teamId} className="btn btn-default">Edit</Link>
+                <span className="spanner">Image</span>
+                <img src={this.props.image} />
             </div>
         )
     }

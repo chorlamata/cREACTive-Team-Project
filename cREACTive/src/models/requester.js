@@ -1,8 +1,8 @@
 import $ from 'jquery';
 
 const baseUrl = "https://baas.kinvey.com/";
-const appKey = "kid_SyFPp0lml";
-const appSecret = "7299d8393b4f4502bb4c984954831923";
+const appKey = "kid_B1ZJNFXQg";
+const appSecret = "f64d6f61ddd14408a8ac9e095271b0e9";
 
 function makeAuth(auth) {
     let header = { "Authorization": '' };
@@ -59,6 +59,26 @@ function update(module, url, auth, data) {
     return $.ajax(request);
 }
 
+function deleteProduct(module, url, auth) {
+    let hostUrl = baseUrl + module + "/" + appKey + "/" + url;
+    let header = makeAuth(auth);
+
+    let request = {
+        method: "DELETE",
+        url: hostUrl,
+        headers: header
+    };
+
+    return $.ajax(request);
+}
 
 
-export {get, post, update};
+// function deleteBook(bookId) {
+//     return $.ajax({
+//         method: "DELETE",
+//         url: baseUrl + "appdata/" + appKey + "/books/" + bookId,
+//         headers: getKinveyUserAuthHeaders()
+//     });
+// }
+
+export {get, post, update, deleteProduct};

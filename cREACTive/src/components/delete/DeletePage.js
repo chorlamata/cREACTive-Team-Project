@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import EditForm from './EditForm';
-import {loadDetails, edit} from '../../models/product';
+import DeleteForm from './DeleteForm';
+import {loadDetails, deleteProduct} from '../../models/product';
 //import observer from '../../models/observer';
 
-export default class EditPage extends Component {
+export default class DeletePage extends Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -14,7 +14,7 @@ export default class EditPage extends Component {
         };
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
-        this.onEditSuccess = this.onEditSuccess.bind(this);
+        this.onDeleteSuccess = this.onDeleteSuccess.bind(this);
         this.onLoadSuccess = this.onLoadSuccess.bind(this);
     }
 
@@ -49,26 +49,22 @@ export default class EditPage extends Component {
 
     onSubmitHandler(event) {
         event.preventDefault();
-        if(this.state.name.length < 3) {
-            alert('Product name must be at least 3 characters long.');
-        } else {
-            edit(this.props.params.productId, this.state.name, this.state.description, this.state.image, this.onEditSuccess);
-        }
+        deleteProduct(this.props.params.productId, this.onDeleteSuccess);
+
     }
 
-    onEditSuccess(result) {
+    onDeleteSuccess(result) {
         this.context.router.push("/catalog");
     }
 
     render() {
         return (
             <div>
-                <h1>Edit Page</h1>
-                <EditForm
+                <h1>Delete Product Page</h1>
+                <DeleteForm
                     name={this.state.name}
                     description={this.state.description}
                     image={this.state.image}
-                    onChange={this.onChangeHandler}
                     onSubmit={this.onSubmitHandler}
                     inputDisabled={this.state.inputDisabled}
                 />
@@ -78,6 +74,6 @@ export default class EditPage extends Component {
     }
 }
 
-EditPage.contextTypes = {
+DeletePage.contextTypes = {
     router: React.PropTypes.object
 };

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class CreateForm extends Component {
+export default class DeleteForm extends Component {
 
     render() {
         return (
@@ -12,7 +12,7 @@ export default class CreateForm extends Component {
                         type="text"
                         name="name"
                         value={this.props.name}
-                        onChange={this.props.onChange}
+                        disabled="disabled"
                     />
                 </div>
                 <div className="form-group">
@@ -21,7 +21,7 @@ export default class CreateForm extends Component {
                         className="form-control"
                         name="description"
                         value={this.props.description}
-                        onChange={this.props.onChange}
+                        disabled="disabled"
                     />
                 </div>
                 <div className="form-group">
@@ -31,13 +31,13 @@ export default class CreateForm extends Component {
                         type="text"
                         name="image"
                         value={this.props.image}
-                        onChange={this.props.onChange}
+                        disabled="disabled"
                     />
                 </div>
                 <input
                     className="btn btn-default"
                     type="submit"
-                    value="Create Product"
+                    value="Delete Product"
                     disabled={this.props.inputDisabled}
                 />
             </form>

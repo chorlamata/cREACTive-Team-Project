@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import CreateForm from './CreateForm';
-import {create} from '../../models/team';
+import {create} from '../../models/product';
 //import observer from '../../models/observer';
 
 export default class CreatePage extends Component {
@@ -9,6 +9,7 @@ export default class CreatePage extends Component {
         this.state = {
             name: '',
             description: '',
+            image: '',
             inputDisabled: true
         };
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -36,11 +37,12 @@ export default class CreatePage extends Component {
         event.preventDefault();
 
         if(this.state.name.length < 3) {
-            alert('Team name must be at least 3 characters long.');
+            alert('Product name must be at least 3 characters long.');
         }
 
         create(this.state.name,
             this.state.description,
+            this.state.image,
             this.onCreateSuccess);
     }
 
@@ -51,10 +53,11 @@ export default class CreatePage extends Component {
     render() {
         return (
             <div>
-                <h1>Create Page</h1>
+                <h1>Create Product Page</h1>
                 <CreateForm
                     name={this.state.name}
                     description={this.state.description}
+                    image={this.state.image}
                     onChange={this.onChangeHandler}
                     onSubmit={this.onSubmitHandler}
                     inputDisabled={this.state.inputDisabled}

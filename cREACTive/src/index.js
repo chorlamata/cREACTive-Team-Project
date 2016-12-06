@@ -9,6 +9,8 @@ import Home from './components/home/HomePage';
 import Login from './components/login/LoginPage';
 import Create from './components/create/CreatePage';
 import Edit from './components/edit/EditPage';
+import Delete from './components/delete/DeletePage';
+import Product from './components/product/ProductPage';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -21,7 +23,9 @@ ReactDOM.render(
             <Route path="register" component={Register}/>
             <Route path="login" component={Login}/>
             <Route path="create" component={Create}/>
-            <Route path="edit/:teamId" component={Edit}/>
+            <Route path="edit/:productId" component={Edit}/>
+            <Route path="delete/:productId" component={Delete}/>
+            <Route path="product/:productId" component={Product}/>
         </Route>
     </Router>,
     document.getElementById('root')

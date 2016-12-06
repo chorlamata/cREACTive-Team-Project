@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class CreateForm extends Component {
+export default class EditForm extends Component {
 
     render() {
         return (
@@ -37,7 +37,7 @@ export default class CreateForm extends Component {
                 <input
                     className="btn btn-default"
                     type="submit"
-                    value="Create Product"
+                    value="Edit Product"
                     disabled={this.props.inputDisabled}
                 />
             </form>
