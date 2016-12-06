@@ -7,7 +7,7 @@ import Catalog from './components/catalog/CatalogPage';
 import Register from './components/register/RegisterPage';
 import Login from './components/login/LoginPage';
 import Create from './components/create/CreatePage';
-import SingleProduct from './components/comments/SingleProductPage'
+import SingleProduct from './components/catalog/SingleProductPage'
 import Edit from './components/editProduct/EditPage';
 import Home from './components/home/HomePage';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'

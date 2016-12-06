@@ -24,7 +24,7 @@ export default class EditPage extends Component {
     onLoadSuccess (response){
         this.setState({
             name: response.name,
-            link:response.link,
+            link: response.link,
             description:response.description
         });
     }

@@ -8,7 +8,7 @@ export default class CommentForm extends Component{
                 <form onSubmit={this.props.onSubmit}>
                     <label>Comment</label>
                     <textarea type="text"
-                            name="description"
+                            name="content"
                             value={this.props.content}
                             onChange={this.props.onChange}
                             disabled={this.props.inputDisabled}

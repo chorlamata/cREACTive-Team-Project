@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class SingleProduct extends Component{
     render(){
         return(
-            <div >
+            <div className="">
                 <label >Name</label>
                 <p >{this.props.name}</p>
                 <label >Link</label>

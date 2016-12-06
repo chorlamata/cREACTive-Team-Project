@@ -40,4 +40,8 @@ function logout(callback) {
         })
         .catch((err) => callback(false));
 }
-export {register, login, logout}
+function getAuthor(authorId, callback) {
+    requester.get('user', authorId, 'kinvey')
+        .then(callback(true))
+}
+export {register, login, logout, getAuthor}

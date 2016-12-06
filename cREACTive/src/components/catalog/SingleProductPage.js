@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import SingleProduct from './SingleProduct';
-import Comment from './CommentForm';
+import CommentToList from '../comments/CommentToList';
 import {loadProductDetails} from '../../models/product'
+import {getAuthor} from '../../models/user'
 import {loadComments, leaveComment} from '../../models/comment'
 import $ from 'jquery'
 
@@ -16,6 +17,7 @@ export default class SingleProductPage extends Component {
             inputDisabled: true
         };
         this.onLoadSuccess = this.onLoadSuccess.bind(this);
+        this.onCommentsLoaded = this.onCommentsLoaded.bind(this);
 
     }
     componentDidMount(){
@@ -45,11 +47,13 @@ export default class SingleProductPage extends Component {
                     description={this.state.description}
                 />
                 <h2>Comments</h2>
-                {/*{this.state.comments.map((t,i) => {*/}
-                    {/*return console.log(<Comment key={i} content={t.content} author={t.creator} productId={t._id}/>)*/}
-                {/*})}*/}
+                {this.state.comments.map((t,i) => {
+                    return <CommentToList key={i} content={t.content} author={getAuthor(t._acl.creator, (response)=>response["username"])}/>
+                })}
+                <h3>Leave Comment</h3>
                 <textarea id="comment"/>
-                <input type="submit" value="Leave comment"onClick={()=>leaveComment($('#comment').val(), this.props.params.productId) }/>
+                <p><input type="submit" value="Leave comment"onClick={
+                ()=>leaveComment($('#comment').val(), this.props.params.productId) }/></p>
             </div>
         )
     }
