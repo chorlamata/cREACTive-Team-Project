@@ -1,36 +1,62 @@
-import  * as requester from './requester'
+import * as requester from './requester';
 
-function create(name, link, description, callback) {
+function create(name, description, image, callback) {
     let productData = {
-        name:name,
-        link:link,
-        description:description
+        name: name,
+        description: description,
+        image: image
     };
+
     requester.post('appdata', 'products', 'kinvey', productData)
-        .then(()=> callback(true))
-        .catch(()=> callback(false))
+        .then(() => callback(true))
+        .catch(() => callback(false));
 }
+
+function postComment(author, comment, productId, callback) {
+    let commentData = {
+        author: author,
+        comment: comment,
+        productId: productId
+    };
+
+    requester.post('appdata', 'comments', 'kinvey', commentData)
+        .then(() => callback(true))
+        .catch(() => callback(false));
+}
+
 function loadProducts(callback) {
     requester.get('appdata', 'products', 'kinvey')
         .then(callback);
 }
-function loadProductDetails(productId, callback) {
+
+function loadDetails(productId, callback) {
     requester.get('appdata', 'products/' + productId, 'kinvey')
         .then(callback);
 }
-function editProduct(productId, name, link, description, callback) {
+
+function loadComments(productId, callback) {
+    let query = 'query={"comments.productId":"' + productId + '"}';
+    requester.get('appdata', `comments/?query={"productId":"`+ productId+`"}`, 'kinvey')
+        .then(callback);
+}
+
+function edit(productId, name, description, image, callback) {
     let productData = {
-        name:name,
-        link:link,
-        description:description
+        name: name,
+        description: description,
+        image: image
     };
-    requester.update('appdata', 'products/'+productId, 'kinvey', productData)
-        .then(()=> callback(true))
-        .catch(()=> callback(false))
+
+    requester.update('appdata', 'products/' + productId, 'kinvey', productData)
+        .then(() => callback(true))
+        .catch(() => callback(false));
 }
+
 function deleteProduct(productId, callback) {
-    requester.remove('appdata', 'products/'+productId, 'kinvey')
-        .then(()=> callback(true))
-        .catch(()=> callback(false))
+
+    requester.deleteProduct('appdata', 'products/' + productId, 'kinvey')
+        .then(() => callback(true))
+        .catch(() => callback(false));
 }
-export {create, loadProducts, loadProductDetails, editProduct, deleteProduct}
+
+export {create, postComment, loadProducts, loadDetails, loadComments, edit, deleteProduct};

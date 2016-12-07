@@ -1,4 +1,4 @@
-import  * as requester from './requester'
+import * as requester from './requester';
 
 function saveSession(userInfo) {
     let userAuth = userInfo._kmd.authtoken;
@@ -6,42 +6,49 @@ function saveSession(userInfo) {
     let userId = userInfo._id;
     sessionStorage.setItem('userId', userId);
     let username = userInfo.username;
-    sessionStorage.setItem('username', username)
-    
+    sessionStorage.setItem('username', username);
 }
-function register(username, password, callback) {
-    let userData = {
-        username: username,
-        password: password
-    };
-    requester.post('user', '', "basic", userData)
-        .then((response) => {
-        saveSession(response);
-        callback(true);
-    });
-}
+
+//user login
+
 function login(username, password, callback) {
     let userData = {
         username: username,
         password: password
     };
-    requester.post('user', 'login', "basic", userData)
+
+    requester.post('user', 'login', 'basic', userData)
         .then((response) => {
-        saveSession(response);
-        callback(true);
-    })
-        .catch((err) => callback(false));
+            saveSession(response);
+            callback(true);
+        }).catch((err) => callback(false));
 }
+
+//user register
+
+function register(username, password, callback) {
+    let userData = {
+        username: username,
+        password: password
+    };
+
+    requester.post('user', '', 'basic', userData)
+        .then((response) => {
+            saveSession(response);
+            callback(true);
+        });
+}
+
+//user logout
+
 function logout(callback) {
-    requester.post('user', '_logout', "kinvey", null)
+
+    requester.post('user', '_logout', 'kinvey', null)
         .then((response) => {
-        sessionStorage.clear();
-        callback(true);
-        })
-        .catch((err) => callback(false));
+            sessionStorage.clear();
+            callback(true);
+        }).catch((err) => callback(false));
+
 }
-function getAuthor(authorId, callback) {
-    requester.get('user', authorId, 'kinvey')
-        .then(callback(true))
-}
-export {register, login, logout, getAuthor}
+
+export {login, register, logout};

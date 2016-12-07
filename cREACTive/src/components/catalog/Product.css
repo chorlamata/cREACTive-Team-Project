@@ -1,8 +1,29 @@
-.product-in-calalog{
-    display: inline-block;
-    width:30%;
+.product-box {
+    margin-bottom: 50px;
 }
-.pr-image{
-    width:250px;
-    height: 250px;
+
+.product-box img {
+    height: 200px;
+    margin: 10px;
+}
+
+.product-box .name-heading {
+    margin: 10px;
+}
+
+.product-box .management {
+    margin: 10px;
+}
+
+.spanner {
+    display: block;
+    background-color: lightslategray;
+    padding: 5px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.comment {
+    margin-bottom: 20px;
+    border: 1px solid lightslategray;
 }

@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import CreateForm from './CreateForm';
-import {create} from '../../models/product';
+import DeleteForm from './DeleteForm';
+import {loadDetails, deleteProduct} from '../../models/product';
 import toastr from 'toastr';
-
 //import observer from '../../models/observer';
 
-export default class CreatePage extends Component {
+export default class DeletePage extends Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -16,7 +15,21 @@ export default class CreatePage extends Component {
         };
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
-        this.onCreateSuccess = this.onCreateSuccess.bind(this);
+        this.onDeleteSuccess = this.onDeleteSuccess.bind(this);
+        this.onLoadSuccess = this.onLoadSuccess.bind(this);
+    }
+
+    componentDidMount() {
+        loadDetails(this.props.params.productId, this.onLoadSuccess);
+    }
+
+    onLoadSuccess(response) {
+        this.setState({
+            name: response.name,
+            description: response.description,
+            image: response.image,
+            inputDisabled: false
+        });
     }
 
     onChangeHandler(event) {
@@ -37,35 +50,27 @@ export default class CreatePage extends Component {
 
     onSubmitHandler(event) {
         event.preventDefault();
+        deleteProduct(this.props.params.productId, this.onDeleteSuccess);
 
-        if(this.state.name.length < 3) {
-            alert('Product name must be at least 3 characters long.');
-        }
-
-        create(this.state.name,
-            this.state.description,
-            this.state.image,
-            this.onCreateSuccess);
     }
 
-    onCreateSuccess(result) {
+    onDeleteSuccess(result) {
         if(result){
-            toastr.success("Product created.");
+            toastr.success("Product deleted.");
             this.context.router.push("/catalog");
-        }else {
-            toastr.error("Product wasn't created.")
+        }else{
+            toastr.error("Product wasn't deleted.")
         }
     }
 
     render() {
         return (
             <div>
-                <h1>Create Product Page</h1>
-                <CreateForm
+                <h1>Delete Product Page</h1>
+                <DeleteForm
                     name={this.state.name}
                     description={this.state.description}
                     image={this.state.image}
-                    onChange={this.onChangeHandler}
                     onSubmit={this.onSubmitHandler}
                     inputDisabled={this.state.inputDisabled}
                 />
@@ -75,6 +80,6 @@ export default class CreatePage extends Component {
     }
 }
 
-CreatePage.contextTypes = {
+DeletePage.contextTypes = {
     router: React.PropTypes.object
 };

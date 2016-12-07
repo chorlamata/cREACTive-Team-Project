@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import CreateForm from './CreateForm';
-import {create} from '../../models/product';
+import EditForm from './EditForm';
+import {loadDetails, edit} from '../../models/product';
 import toastr from 'toastr';
-
 //import observer from '../../models/observer';
 
-export default class CreatePage extends Component {
+export default class EditPage extends Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -16,7 +15,21 @@ export default class CreatePage extends Component {
         };
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
-        this.onCreateSuccess = this.onCreateSuccess.bind(this);
+        this.onEditSuccess = this.onEditSuccess.bind(this);
+        this.onLoadSuccess = this.onLoadSuccess.bind(this);
+    }
+
+    componentDidMount() {
+        loadDetails(this.props.params.productId, this.onLoadSuccess);
+    }
+
+    onLoadSuccess(response) {
+        this.setState({
+            name: response.name,
+            description: response.description,
+            image: response.image,
+            inputDisabled: false
+        });
     }
 
     onChangeHandler(event) {
@@ -37,31 +50,27 @@ export default class CreatePage extends Component {
 
     onSubmitHandler(event) {
         event.preventDefault();
-
         if(this.state.name.length < 3) {
             alert('Product name must be at least 3 characters long.');
+        } else {
+            edit(this.props.params.productId, this.state.name, this.state.description, this.state.image, this.onEditSuccess);
         }
-
-        create(this.state.name,
-            this.state.description,
-            this.state.image,
-            this.onCreateSuccess);
     }
 
-    onCreateSuccess(result) {
-        if(result){
-            toastr.success("Product created.");
+    onEditSuccess(result) {
+        if(result) {
+            toastr.success("Product edited.");
             this.context.router.push("/catalog");
-        }else {
-            toastr.error("Product wasn't created.")
+        }else{
+            toastr.error("Product wasn't edited.")
         }
     }
 
     render() {
         return (
             <div>
-                <h1>Create Product Page</h1>
-                <CreateForm
+                <h1>Edit Page</h1>
+                <EditForm
                     name={this.state.name}
                     description={this.state.description}
                     image={this.state.image}
@@ -75,6 +84,6 @@ export default class CreatePage extends Component {
     }
 }
 
-CreatePage.contextTypes = {
+EditPage.contextTypes = {
     router: React.PropTypes.object
 };

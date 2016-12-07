@@ -1,47 +1,43 @@
 import React, {Component} from 'react';
 
-export default class RegisterForm extends Component {
+export default class EditForm extends Component {
 
     render() {
         return (
             <form onSubmit={this.props.onSubmit}>
                 <div className="form-group">
-                    <label>Username</label>
+                    <label>Product Name</label>
                     <input
                         className="form-control"
                         type="text"
-                        name="username"
-                        value={this.props.username}
+                        name="name"
+                        value={this.props.name}
                         onChange={this.props.onChange}
-                        disabled={this.props.inputDisabled}
                     />
                 </div>
                 <div className="form-group">
-                    <label>Password</label>
-                    <input
+                    <label>Description</label>
+                    <textarea
                         className="form-control"
-                        type="password"
-                        name="password"
-                        value={this.props.password}
+                        name="description"
+                        value={this.props.description}
                         onChange={this.props.onChange}
-                        disabled={this.props.inputDisabled}
                     />
                 </div>
                 <div className="form-group">
-                    <label>Repeat Password</label>
+                    <label>Image</label>
                     <input
                         className="form-control"
-                        type="password"
-                        name="repeat"
-                        value={this.props.repeat}
+                        type="text"
+                        name="image"
+                        value={this.props.image}
                         onChange={this.props.onChange}
-                        disabled={this.props.inputDisabled}
                     />
                 </div>
                 <input
                     className="btn btn-default"
                     type="submit"
-                    value="Register"
+                    value="Edit Product"
                     disabled={this.props.inputDisabled}
                 />
             </form>

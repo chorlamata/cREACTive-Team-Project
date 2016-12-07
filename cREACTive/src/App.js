@@ -1,68 +1,80 @@
 import React, { Component } from 'react';
-import NavigationBar from './components/common/NavigationBar'
+import Header from './components/common/Header';
 import {Link} from 'react-router';
-import observer from './models/observer'
-import {logout} from './models/user'
+import observer from './models/observer';
+import {logout} from './models/user';
+
+
 
 class App extends Component {
-    constructor(props){
-        super(props)
+    constructor(props) {
+        super(props);
         this.state = {
             loggedIn: false,
-            username: ""
+            username: ''
         };
+
         this.onSessionUpdate = this.onSessionUpdate.bind(this);
         this.onLogout = this.onLogout.bind(this);
+
     }
-    componentDidMount(){
+
+    componentDidMount() {
         observer.onSessionUpdate = this.onSessionUpdate;
         this.checkUserCredentials();
     }
-    onSessionUpdate(){
+
+    onSessionUpdate() {
+        console.log('rechecking session creds');
         this.checkUserCredentials();
     }
-    checkUserCredentials(){
+
+    checkUserCredentials() {
         let username = sessionStorage.getItem('username');
-        if (!username){
+        if(!username) {
             this.setState({
-                loggedIn:false
+                loggedIn: false
             })
-        }else{
+        } else {
             this.setState({
-                loggedIn:true,
+                loggedIn: true,
                 username: username
-            });
+            })
         }
     }
-    onLogout(){
+
+    onLogout() {
         this.checkUserCredentials();
     }
-  render() {
-        if(this.state.loggedIn){
+
+    render() {
+        if(this.state.loggedIn) {
             return (
                 <div className="container">
-                    <NavigationBar loggedIn={this.state.loggedIn} username={this.state.username}>
+                    <Header loggedIn={this.state.loggedIn} username={this.state.username}>
                         <Link to="/" className="btn btn-default">Home</Link>
-                        <Link to="/create" className="btn btn-default">Create product</Link>
-                        <Link to="/" className="btn btn-default" onClick={() => logout(this.onLogout)}>Logout</Link>
-                        <Link to="/catalog"  className="btn btn-default">Catalog</Link>
-                    </NavigationBar>
+                        <Link to="/catalog" className="btn btn-default">Catalog</Link>
+                        <Link to="/create" className="btn btn-default">Create Product</Link>
+                        <Link to="/about" className="btn btn-default">About</Link>
+                        <Link to="" className="btn btn-default" onClick={ () => logout(this.onLogout) }>Logout</Link>
+                    </Header>
                     {this.props.children}
                 </div>
             );
         }
-      return (
+
+        return (
           <div className="container">
-            <NavigationBar loggedIn={this.state.loggedIn} username={this.state.username}>
-                <Link to="/" className="btn btn-default">Home</Link>
-                <Link to="/login" className="btn btn-default">Login</Link>
-                <Link to="/register" className="btn btn-default">Register</Link>
-                <Link to="/catalog"  className="btn btn-default">Catalog</Link>
-            </NavigationBar>
+              <Header loggedIn={this.state.loggedIn} username={this.state.username}>
+                  <Link to="/" className="btn btn-default">Home</Link>
+                  <Link to="/about" className="btn btn-default">About</Link>
+                  <Link to="/login" className="btn btn-default">Login</Link>
+                  <Link to="/register" className="btn btn-default">Register</Link>
+              </Header>
               {this.props.children}
           </div>
-      );
-  }
+        );
+    }
 }
 
 export default App;
