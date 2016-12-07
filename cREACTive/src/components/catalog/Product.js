@@ -14,9 +14,7 @@ export default class Product extends Component {
 
         return (
             <div className="col-md-4 product-box">
-                <span className="spanner">Name</span>
                 <div className="name-heading"><h4>{this.props.name}</h4></div>
-                <span className="spanner">Image</span>
                 <img src={this.props.image} className="img-responsive img-rounded" />
                 <span className="spanner">Management</span>
                 <div className="management">

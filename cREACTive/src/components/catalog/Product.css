@@ -1,3 +1,30 @@
+#root {
+    background-color: rgba(250, 235, 215, 0.50)!important;
+
+}
+body{
+    font-family: "book antiqua",Helvetica,Arial,sans-serif!important;
+}
+.jumbotron{
+    color: antiquewhite !important;
+    background-image: url("../../../public/background.jpg");
+}
+h1{
+    font-style: italic;
+    color: antiquewhite;
+}
+.btn {margin-left: 5px;}
+.btn-default {
+    color: #f5f5f5!important;
+    background-color: #778899!important;
+    border-color: #5e7283!important;
+}
+.btn-default {
+    color: #f5f5f5!important;
+    background-color: #1f3242!important;
+    border-color: #1b1f23
+    !important;
+}
 .product-box {
     margin-bottom: 50px;
 }
@@ -14,6 +41,7 @@
 .product-box .management {
     margin: 10px;
 }
+
 
 .spanner {
     display: block;
